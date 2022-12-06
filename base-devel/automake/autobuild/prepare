@@ -1,0 +1,2 @@
+abinfo "Injecting newest config.* from config package ..."
+cp /usr/bin/config.* "$SRCDIR"/lib/
