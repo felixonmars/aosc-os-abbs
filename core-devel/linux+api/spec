@@ -1,4 +1,5 @@
-VER=5.15.59
-SRCS="tbl::https://www.kernel.org/pub/linux/kernel/v${VER%%.*}.x/linux-$VER.tar.xz"
-CHKSUMS="sha256::e6ddc642057340db06b3b921c2b31bfed2c611359e8f144c3e5cf9c3ac33bccb"
-CHKUPDATE="git::url=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git;pattern=v5.4.*"
+VER=6.1~rc8
+# SRCS="tbl::https://www.kernel.org/pub/linux/kernel/v${VER%%.*}.x/linux-$VER.tar.xz"
+SRCS="tbl::https://git.kernel.org/torvalds/t/linux-6.1-rc8.tar.gz"
+CHKSUMS="sha256::61063135667b1e6177cf933cf12f08f2d8ce6a094d61616d0869466c3b6dc7ae"
+CHKUPDATE="git::url=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git;pattern=v6.1.*"
