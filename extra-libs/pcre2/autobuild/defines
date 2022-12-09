@@ -25,5 +25,8 @@ AUTOTOOLS_AFTER__ARMV7HF="${AUTOTOOLS_AFTER} \
 AUTOTOOLS_AFTER__RISCV64="${AUTOTOOLS_AFTER} \
                  --disable-jit \
                  --disable-pcre2grep-jit"
+AUTOTOOLS_AFTER__LOONGARCH64="${AUTOTOOLS_AFTER} \
+                 --disable-jit \
+                 --disable-pcre2grep-jit"
 
 AB_FLAGS_O3=1
