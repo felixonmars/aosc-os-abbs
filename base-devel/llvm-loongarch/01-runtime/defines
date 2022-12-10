@@ -1,0 +1,32 @@
+PKGNAME=llvm-runtime
+PKGSEC=libs
+PKGDEP="gcc-runtime libedit libffi ncurses zlib"
+BUILDDEP="swig doxygen ocaml findlib llvm"
+PKGDES="Low Level Virtual Machine Infrastructure (runtime libraries)"
+
+AB_FLAGS_O3=1
+
+USECLANG=0
+
+NOLTO=1
+
+CMAKE_AFTER="-DLLVM_BUILD_LLVM_DYLIB=ON \
+             -DLLVM_DYLIB_EXPORT_ALL=ON \
+             -DLLVM_LINK_LLVM_DYLIB=ON \
+             -DLLVM_ENABLE_RTTI=ON \
+             -DLLVM_ENABLE_FFI=ON \
+             -DLLVM_BUILD_DOCS=OFF \
+             -DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
+             -DLLVM_BINUTILS_INCDIR=/usr/include \
+             -DLLVM_INSTALL_UTILS=ON \
+             -DLLVM_ENABLE_LLD=OFF"
+
+PKGBREAK="ccls<=0.20201219-2 codelite<=15.0 cquery<=20180718-5 \
+          edi<=0.8.0-5 gnome-builder<=3.40.0-1 \
+          intel-graphics-compiler<=1.0.7423 intellij-idea<=2020.3.2-1 \
+          ispc<=1.15.0-1 kdevelop<=5.6.2-1 ldc<=1.24.0-1 \
+          liblphobos<=1.24.0-1 libobjc2<=2.1-1 llvm<=11.1.0 \
+          mesa<=1:21.0.2 opencl-clang<=11.0.0-1 openstf<=3.3.0 \
+          pocl<=1:1.6-1 pyside2<=5.15.1 qt-5<=1:5.15.1+wk5.212.0-5 \
+          qtcreator<=4.14.1-1 rustc<=1:1.52.1 spirv-llvm-translator<=11.0.0-1"
+PKGREP="llvm<=3.7.0-2"

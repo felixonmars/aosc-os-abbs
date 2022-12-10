@@ -1,0 +1,5 @@
+VER=14.0.6+loongarch+git20221101
+SRCS="git::rename=llvm-project;commit=5b00e4880c0e927177420b898fb04b0d4bbfebb9::https://github.com/loongson/llvm-project.git"
+SUBDIR="llvm-project/llvm"
+CHKSUMS="SKIP"
+CHKUPDATE="anitya::id=1830"
