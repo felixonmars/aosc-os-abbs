@@ -1,4 +1,4 @@
-VER=0.5+git20220405
-SRCS="git::commit=43af58e8adad70c4f1a0a9235546a246754c1737::https://github.com/litehtml/litehtml"
+VER=0.6+git20221220
+SRCS="git::commit=cd1748055151d4569845a18191a009ef2e2b757f::https://github.com/litehtml/litehtml"
 CHKSUMS="SKIP"
 CHKUPDATE="anitya::id=243317"
