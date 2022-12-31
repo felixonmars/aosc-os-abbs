@@ -59,7 +59,7 @@ MESON_AFTER="-Dkmod=true \
              -Dseccomp=true \
              -Dman=true \
              -Dfallback-hostname=aosc \
-             -Dnobody_user=systemd-nobody -Dnobody_group=systemd-nogroup \
+             -Dnobody-user=systemd-nobody -Dnobody-group=systemd-nogroup \
              -Dntp-servers=pool.ntp.org \
              -Doomd=true \
              -Dhomed=true \
