@@ -1,0 +1,51 @@
+From 0a58cd00454cc7b57b04f3a4a334584d743d7f7a Mon Sep 17 00:00:00 2001
+From: Yu Watanabe <watanabe.yu+github@gmail.com>
+Date: Tue, 26 Jul 2022 20:03:12 +0900
+Subject: [PATCH] home: drop conflicted headers
+
+Fixes #24117.
+
+diff -Naur systemd-stable-248.3/src/home/homework-luks.c systemd-stable-248.3.glibc236/src/home/homework-luks.c
+--- systemd-stable-248.3/src/home/homework-luks.c       2021-05-15 09:33:34.000000000 -0700
++++ systemd-stable-248.3.glibc236/src/home/homework-luks.c      2022-12-31 10:27:41.926067043 -0800
+@@ -5,7 +5,6 @@
+ #include <poll.h>
+ #include <sys/file.h>
+ #include <sys/ioctl.h>
+-#include <sys/mount.h>
+ #include <sys/xattr.h>
+ 
+ #include "blkid-util.h"
+diff -Naur systemd-stable-248.3/src/basic/missing_fs.h systemd-stable-248.3.glibc236/src/basic/missing_fs.h
+--- systemd-stable-248.3/src/basic/missing_fs.h 2021-05-15 09:33:34.000000000 -0700
++++ systemd-stable-248.3.glibc236/src/basic/missing_fs.h        2022-12-31 10:44:42.097762876 -0800
+@@ -65,3 +65,13 @@
+ #ifndef FS_PROJINHERIT_FL
+ #define FS_PROJINHERIT_FL 0x20000000
+ #endif
++
++/* linux/fscrypt.h */
++#ifndef FS_KEY_DESCRIPTOR_SIZE
++#define FS_KEY_DESCRIPTOR_SIZE 8
++#endif
++
++/* sys/mount.h */
++#ifndef UMOUNT_NOFOLLOW
++#define UMOUNT_NOFOLLOW                8
++#endif
+diff -Naur systemd-stable-248.3/src/home/homework.h systemd-stable-248.3.glibc236/src/home/homework.h
+--- systemd-stable-248.3/src/home/homework.h    2021-05-15 09:33:34.000000000 -0700
++++ systemd-stable-248.3.glibc236/src/home/homework.h   2022-12-31 10:26:18.148163048 -0800
+@@ -6,7 +6,9 @@
+ 
+ #include "sd-id128.h"
+ 
++#include "cryptsetup-util.h"
+ #include "loop-util.h"
++#include "missing_fs.h" /* for FS_KEY_DESCRIPTOR_SIZE, do not include linux/fs.h */
+ #include "user-record.h"
+ #include "user-record-util.h"
+
+-- 
+2.38.1
+

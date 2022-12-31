@@ -1,0 +1,22 @@
+diff -Naur systemd-stable-248.3/src/core/namespace.c systemd-stable-248.3.glibc236/src/core/namespace.c
+--- systemd-stable-248.3/src/core/namespace.c	2021-05-15 09:33:34.000000000 -0700
++++ systemd-stable-248.3.glibc236/src/core/namespace.c	2022-12-31 10:23:38.544418737 -0800
+@@ -6,7 +6,6 @@
+ #include <stdio.h>
+ #include <sys/mount.h>
+ #include <unistd.h>
+-#include <linux/fs.h>
+ 
+ #include "alloc-util.h"
+ #include "base-filesystem.h"
+diff -Naur systemd-stable-248.3/src/home/homework.h systemd-stable-248.3.glibc236/src/home/homework.h
+--- systemd-stable-248.3/src/home/homework.h	2021-05-15 09:33:34.000000000 -0700
++++ systemd-stable-248.3.glibc236/src/home/homework.h	2022-12-31 10:23:38.559418901 -0800
+@@ -1,7 +1,6 @@
+ /* SPDX-License-Identifier: LGPL-2.1-or-later */
+ #pragma once
+ 
+-#include <linux/fs.h>
+ #include <sys/vfs.h>
+ 
+ #include "sd-id128.h"
