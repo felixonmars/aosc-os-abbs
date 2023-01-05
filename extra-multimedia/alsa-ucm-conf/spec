@@ -1,4 +1,4 @@
-VER=1.2.5.1
+VER=1.2.8
 SRCS="tbl::https://www.alsa-project.org/files/pub/lib/alsa-ucm-conf-$VER.tar.bz2"
-CHKSUMS="sha256::5841a444166dcbf479db751303dbc3556f685085ac7e00f0c9e7755676195d97"
+CHKSUMS="sha256::fee4a737830fd25f969d83da46a2b231beb086efd966fcc07d225e7823260ae8"
 CHKUPDATE="anitya::id=141467"
