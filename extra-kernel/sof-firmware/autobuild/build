@@ -1,9 +1,9 @@
 abinfo "Setting firmware path to /usr/lib/firmware/intel ..."
-export FW_DEST="${PKGDIR}/usr/lib/firmware/intel"
+export FW_DEST="${PKGDIR}/usr/lib/firmware/intel/"
 
 abinfo "Installing SOF firmware data ..."
-mkdir -vp "${FW_DEST}"
-"$SRCDIR"/install.sh v$PKGVER
+mkdir -vp "$FW_DEST"
+rsync -av "${SRCDIR}/sof-tplg-v${PKGVER}" "${SRCDIR}/sof-v${PKGVER}" "${FW_DEST}"
 
 abinfo "Installing upstream legal notices ..."
 install -Dvm644 "$SRCDIR"/Notice* \
