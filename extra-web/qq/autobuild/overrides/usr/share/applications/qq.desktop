@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QQ
+Exec=/usr/bin/qq %U
+Terminal=false
+Comment=Official Linux QQ client based on Electron
+Type=Application
+Icon=qq
+StartupWMClass=QQ
+Categories=Chat;Network;InstantMessaging;

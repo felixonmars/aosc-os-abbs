@@ -1,0 +1,9 @@
+PKGNAME=qq
+PKGSEC=web
+PKGDES="Official Linux QQ client based on Electron"
+PKGDEP="alsa-lib at-spi2-atk at-spi2-core atk cairo cups dbus expat glib gtk-3 \
+        krb5 libdrm libgcrypt libnotify libxcb libxkbcommon mesa nspr nss \
+        pango util-linux wayland x11-lib xdg-utils zlib gnutls aosc-nanny"
+
+FAIL_ARCH="!(amd64|arm64)"
+ABSPLITDBG=0

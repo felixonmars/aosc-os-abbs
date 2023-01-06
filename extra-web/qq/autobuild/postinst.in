@@ -1,0 +1,40 @@
+ARCH=@ARCH@
+
+TEMP_PATH="$(mktemp -d)"
+FILENAME="qq_@PKGVER@_@ARCH@.deb"
+
+echo -e "Downloading QQ ..."
+wget "https://dldir1.qq.com/qqfile/qq/QQNT/c005c911/linuxqq_@PKGVER@_@ARCH@.deb" \
+	-O "${TEMP_PATH}/${FILENAME}"
+
+# Check file integrity
+echo "@SHA256SUM@  ${TEMP_PATH}/${FILENAME}" | sha256sum -c
+if [ $? -ne 0 ]; then
+	echo -e "SHA-256 checksum mismatched, please try again later ..."
+	exit 1
+fi
+
+# Unpack
+echo -e "Installing QQ ..."
+mkdir -p "${TEMP_PATH}/qq"
+
+dpkg -x "${TEMP_PATH}/${FILENAME}" \
+	"${TEMP_PATH}/qq"
+
+# The "2x2" icon is actually 32x32
+mv "${TEMP_PATH}/qq/usr/share/icons/hicolor/2x2" \
+   "${TEMP_PATH}/qq/usr/share/icons/hicolor/32x32"
+
+mkdir -p /usr/{bin,lib}
+
+# Copy actual files
+cp -a "${TEMP_PATH}"/qq/opt/QQ \
+	/usr/lib/qq
+
+# Copy icons and application files
+mkdir -p /usr/share/icons
+cp -a "${TEMP_PATH}/qq/usr/share/icons" \
+	"/usr/share/"
+
+# Delete temporary files
+rm -Rf "${TEMP_PATH}"

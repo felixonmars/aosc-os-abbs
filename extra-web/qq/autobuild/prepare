@@ -1,0 +1,13 @@
+abinfo "Setting SHA256SUM ..."
+if [[ "$ARCH" = "amd64" ]]; then
+	export __SHA256SUM="${__SHA256SUM_AMD64}"
+elif [[ "$ARCH" = "arm64" ]]; then
+	export __SHA256SUM="${__SHA256SUM_ARM64}"
+fi
+
+abinfo "Generating QQ downloader (as postinst) ..."
+sed -e "s|@PKGVER@|${PKGVER}|g" \
+    -e "s|@ARCH@|${ARCH}|g" \
+    -e "s|@SHA256SUM@|${__SHA256SUM}|g" \
+    "${SRCDIR}"/autobuild/postinst.in \
+    > "${SRCDIR}"/autobuild/postinst

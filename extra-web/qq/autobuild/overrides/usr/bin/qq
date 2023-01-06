@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+nanny -n qq -a Icalingua++ -k icalingua++ -d "QQ" \
+	-l "https://rule.tencent.com/rule/preview/3fd52bde-6555-453b-9ab8-c5f1f3d22c62"
+
+# Workaround `libbugly.so: undefined symbol: gnutls_free`
+LD_PRELOAD=/usr/lib/libgnutls.so /usr/lib/qq/qq "$@"

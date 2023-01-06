@@ -1,0 +1,2 @@
+rm -Rf /usr/lib/qq
+rm -f /usr/share/icons/hicolor/{32x32,512x512}/apps/qq.png
