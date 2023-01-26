@@ -1,0 +1,5 @@
+abinfo "Patching broken paths ..."
+for i in /usr/share/wayland-sessions/plasma-mobile.desktop /usr/bin/kwinwrapper; do
+	abinfo "Patching $i ..."
+	sed -i 's@/usr/lib/libexec@/usr/lib@g' "$PKGDIR""$i"
+done

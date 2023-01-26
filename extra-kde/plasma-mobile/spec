@@ -1,0 +1,4 @@
+VER=5.25.5
+SRCS="tbl::https://download.kde.org/stable/plasma/${VER}/plasma-mobile-$VER.tar.xz"
+CHKSUMS="sha256::c92e7f1b492ea0b1b1fe29cdb102b9c90157a4a1106edf30429d2db971ab8ae0"
+CHKUPDATE="anitya::id=8761"

@@ -1,10 +1,12 @@
-PKGNAME=plasma-phone-components
-PKGDES="UI componets for Plasma Mobile"
+PKGNAME=plasma-mobile
+PKGDES="Plasma UI components for mobile device interface"
 PKGSEC=kde
 PKGDEP="plasma-framework ofono libqofono kpeople telepathy-qt \
         gst-plugins-base-1-0 libphonenumber polkit-kde-agent-1 \
         powerdevil plasma-workspace signon urfkill plasma-nano \
-        modemmanager-qt"
+        modemmanager-qt plasma-pa plasma-nm"
 BUILDDEP="extra-cmake-modules"
 
-PKGEPOCH=1
+PKGBREAK="plasma-phone-components"
+PKGPROV="plasma-phone-components"
+PKGREP="plasma-phone-components"
