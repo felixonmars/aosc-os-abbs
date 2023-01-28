@@ -1,12 +1,56 @@
 PKGNAME=libdrm
-PKGDES="Direct Rendering Manager runtime library"
-PKGDEP="x11-lib"
 PKGSEC=libs
+PKGDEP="x11-lib"
+BUILDDEP="docutils"
+PKGDES="Direct Rendering Manager (DRM) runtime library"
 
-MESON_AFTER="-Dudev=true \
-             -Dvalgrind=disabled"
+# Common options.
+MESON_AFTER="-Dcairo-tests=disabled \
+             -Dman-pages=enabled \
+             -Dvalgrind=disabled \
+             -Dfreedreno-kgsl=false \
+             -Dinstall-test-programs=false \
+             -Dudev=true \
+             -Dtests=false \
+             -Dintel=enabled \
+             -Dradeon=enabled \
+             -Damdgpu=enabled \
+             -Dnouveau=enabled \
+             -Dvmwgfx=disabled \
+             -Domap=disabled \
+             -Dexynos=disabled \
+             -Dfreedreno=disabled \
+             -Dtegra=disabled \
+             -Dvc4=disabled \
+             -Detnaviv=disabled"
+
+# x86 drivers.
+MESON_AFTER__X86=" \
+             ${MESON_AFTER} \
+             -Dintel=enabled \
+             -Dradeon=enabled \
+             -Damdgpu=enabled \
+             -Dnouveau=enabled \
+             -Dvmwgfx=enabled \
+             -Domap=disabled \
+             -Dexynos=disabled \
+             -Dfreedreno=disabled \
+             -Dtegra=disabled \
+             -Dvc4=disabled \
+             -Detnaviv=disabled"
+MESON_AFTER__AMD64=" \
+             ${MESON_AFTER__X86}"
+MESON_AFTER__I486=" \
+             ${MESON_AFTER__X86}"
+
+# ARM drivers.
 MESON_AFTER__ARM=" \
              ${MESON_AFTER} \
+             -Dintel=enabled \
+             -Dradeon=enabled \
+             -Damdgpu=enabled \
+             -Dnouveau=enabled \
+             -Dvmwgfx=disabled \
              -Domap=enabled \
              -Dexynos=enabled \
              -Dfreedreno=enabled \
