@@ -5,9 +5,25 @@ BUILDDEP="python-3"
 PKGDES="API and commands for processing SPIR-V modules"
 
 CMAKE_AFTER="-DSPIRV-Headers_SOURCE_DIR=/usr \
+             -DENABLE_RTTI=ON \
+             -DRE2_BUILD_TESTING:STRING=OFF \
+             -DSKIP_SPIRV_TOOLS_INSTALL=OFF \
+             -DSPIRV_ALLOW_TIMERS=ON \
+             -DSPIRV_BUILD_FUZZER=OFF \
+             -DSPIRV_BUILD_LIBFUZZER_TARGETS=OFF \
+             -DSPIRV_CHECK_CONTEXT=OFF \
+             -DSPIRV_COLOR_TERMINAL=ON \
+             -DSPIRV_LOG_DEBUG=OFF \
+             -DSPIRV_SKIP_EXECUTABLES=OFF \
+             -DSPIRV_SKIP_TESTS=OFF \
              -DSPIRV_TOOLS_BUILD_STATIC=ON \
+             -DSPIRV_TOOLS_INSTALL_EMACS_HELPERS=ON \
+             -DSPIRV_WARN_EVERYTHING=OFF \
+             -DSPIRV_WERROR=OFF \
              -DBUILD_SHARED_LIBS=ON \
              -DPYTHON_EXECUTABLE=/usr/bin/python${ABPY3VER}"
 
 NOSTATIC=0
+
+# Note: Disable LTO for static libraries.
 NOLTO=1
