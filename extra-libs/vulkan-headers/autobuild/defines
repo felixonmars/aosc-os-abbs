@@ -3,6 +3,8 @@ PKGSEC=libs
 PKGDEP=""
 PKGDES="Vulkan header files and API registry"
 
+CMAKE_AFTER="-DBUILD_TESTS=OFF"
+
 ABHOST=noarch
 
 PKGBREAK="vulkan<=1.1.70.1-3"

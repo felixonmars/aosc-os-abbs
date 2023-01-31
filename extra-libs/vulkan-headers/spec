@@ -1,4 +1,4 @@
-VER=1.3.236
-SRCS="tbl::https://github.com/KhronosGroup/Vulkan-Headers/archive/v$VER.tar.gz"
-CHKSUMS="sha256::a86b8c38618b764057b359cf0f18c12a7c81b7760fe6fca1acf9adb471d55d4c"
+VER=1.3.239
+SRCS="tbl::https://github.com/KhronosGroup/Vulkan-Headers/archive/sdk-$VER.tar.gz"
+CHKSUMS="sha256::c0a29b4648b7af386b4eb44144b4a5d54ed8f5e13866b5f904cf33430e5b7cd6"
 CHKUPDATE="anitya::id=88835"
