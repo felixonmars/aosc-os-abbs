@@ -3,7 +3,7 @@ PKGSEC=libs
 PKGDES="MesaLib - a OpenGL implementation"
 PKGDEP="x11-lib libdrm expat systemd elfutils libvdpau nettle \
         libva wayland s2tc lm-sensors libglvnd llvm-runtime \
-        libcl libclc"
+        libcl libclc spirv-llvm-translator"
 PKGDEP__RETRO="x11-lib elfutils libdrm libglvnd libva libvdpau llvm-runtime \
                expat systemd"
 PKGDEP__ARMV4="${PKGDEP__RETRO}"
@@ -14,7 +14,9 @@ PKGDEP__LOONGSON2F="${PKGDEP__RETRO}"
 PKGDEP__POWERPC="${PKGDEP__RETRO}"
 PKGDEP__PPC64="${PKGDEP__RETRO}"
 
-BUILDDEP="x11-proto mako systemd valgrind llvm libunwind glslang"
+BUILDDEP="x11-proto mako systemd valgrind llvm libunwind glslang rustc \
+          spirv-tools bindgen"
+BUILDDEP__MIPS64R6EL="${BUILDDEP/rustc/}"
 BUILDDEP__RISCV64="x11-proto mako systemd llvm glslang"
 
 BUILDDEP__RETRO="x11-proto llvm mako"
@@ -27,52 +29,85 @@ BUILDDEP__LOONGSON2F="${BUILDDEP__RETRO}"
 BUILDDEP__POWERPC="${BUILDDEP__RETRO__OLDMESA}"
 BUILDDEP__PPC64="${BUILDDEP__RETRO__OLDMESA}"
 
+USECLANG=1
+
 PKGEPOCH=1
 
-MESON_AFTER="-Ddri-drivers-path=/usr/lib/xorg/modules/dri \
-             -Db_ndebug=true \
-             -Dplatforms=x11,wayland \
-             -Dvulkan-layers=device-select,overlay \
-             -Ddri3=enabled \
-             -Degl=enabled \
+MESON_AFTER="-Dplatforms=x11,wayland \
+             -Degl-native-platform=x11 \
+             -Dandroid-stub=false \
+             -Ddri3=true \
+             -Ddri-drivers-path=/usr/lib/xorg/modules/dri \
              -Dgallium-extra-hud=true \
-             -Dgallium-nine=true \
-             -Dgallium-opencl=icd \
-             -Dgallium-rusticl=false \
-             -Dopencl-spirv=false \
+             -Dgallium-vdpau=true \
              -Dgallium-omx=disabled \
-             -Dgallium-va=enabled \
-             -Dgallium-vdpau=enabled \
-             -Dgallium-xa=enabled \
-             -Dgbm=enabled \
-             -Dgles1=enabled \
-             -Dgles2=enabled \
-             -Dglvnd=true \
+             -Dgallium-va=true \
+             -Dgallium-xa=true \
+             -Dgallium-nine=true \
+             -Dgallium-d3d10umd=false \
+             -Dgallium-opencl=icd \
+             -Dgallium-rusticl=true \
+             -Dopencl-spirv=true \
+             -Dfreedreno-kgsl=false \
+             -Dfreedreno-virtio=false \
+             -Dimagination-srv=false \
+             -Dshader-cache=true \
+             -Dshader-cache-default=true \
+             -Dvulkan-layers=device-select,intel-nullhw,overlay \
+             -Dshared-glapi=true \
+             -Dgles1=true \
+             -Dgles2=true \
+             -Dopengl=true \
+             -Dgbm=true \
              -Dglx=dri \
-             -Dllvm=enabled \
+             -Degl=true \
+             -Dglvnd=true \
+             -Dmicrosoft-clc=disabled \
+             -Dspirv-to-dxil=false \
+             -Dglx-read-only-text=false \
+             -Dllvm=true \
+             -Dshared-llvm=true \
+             -Ddraw-use-llvm=true \
+             -Dvalgrind=false \
              -Dlmsensors=enabled \
+             -Dbuild-tests=false \
+             -Denable-glcpp-tests=false \
+             -Dbuild-aco-tests=false \
+             -Dinstall-intel-gpu-tests=false \
+             -Dselinux=false \
+             -Dexecmem=true \
              -Dosmesa=true \
-             -Dshared-glapi=enabled \
-             -Dvalgrind=enabled \
-             -Dvideo-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc"
-
+             -Dosmesa=true \
+             -Dtools= \
+             -Dpower8=false \
+             -Dxlib-lease=true \
+             -Dglx-direct=true \
+             -Dzstd=true \
+             -Dzlib=enabled \
+             -Dsse2=false \
+             -Dperfetto=false \
+             -Ddatasources= \
+             -Dvmware-mks-stats=false \
+             -Dvulkan-beta=false \
+             -Dintel-clc=disabled \
+             -Dvideo-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc \
+             -Dgallium-d3d12-video=enabled \
+             -Dmin-windows-version=10"
 MESON_AFTER__X86=" \
              ${MESON_AFTER} \
-             -Db_lto=true \
-             -Dgallium-drivers=r300,r600,radeonsi,nouveau,virgl,swrast,svga,iris,d3d12,i915,crocus,zink \
+             -Dgallium-drivers=kmsro,radeonsi,r300,r600,nouveau,swrast,i915,svga,virgl,iris,zink,d3d12,crocus \
              -Dvulkan-drivers=amd,intel,intel_hasvk,swrast,virtio-experimental"
+# Note: "iris" Gallgium driver enabled for Intel ARC graphics.
 MESON_AFTER__ARM=" \
              ${MESON_AFTER} \
-             -Db_lto=true \
-             -Dgallium-drivers=r300,r600,radeonsi,nouveau,virgl,swrast,kmsro,lima,panfrost,freedreno,tegra,vc4,v3d,etnaviv,d3d12,zink \
-             -Dvulkan-drivers=amd,broadcom,freedreno,panfrost,swrast,virtio-experimental \
-             -Dfreedreno-kgsl=false \
-             -Dfreedreno-virtio=false"
+             -Dgallium-drivers=kmsro,radeonsi,r300,r600,nouveau,freedreno,swrast,v3d,vc4,etnaviv,tegra,virgl,panfrost,iris,lima,zink,d3d12,asahi \
+             -Dvulkan-drivers=amd,broadcom,freedreno,intel,panfrost,swrast,virtio-experimental \
+             -Dfreedreno-virtio=true"
+# Note: "iris" Gallgium driver enabled for Intel ARC graphics.
 MESON_AFTER__OTHER=" \
              ${MESON_AFTER} \
-             -Db_lto=true \
-             -Dgallium-drivers=r300,r600,radeonsi,nouveau,virgl,swrast,zink \
-             -Dvulkan-drivers=amd,swrast,virtio-experimental"
+             -Dgallium-drivers=kmsro,radeonsi,r300,r600,nouveau,swrast,virgl,iris,zink \
+             -Dvulkan-drivers=amd,intel,swrast,virtio-experimental"
 
 MESON_AFTER__AMD64=" \
              ${MESON_AFTER__X86} \
@@ -80,6 +115,14 @@ MESON_AFTER__AMD64=" \
 MESON_AFTER__ARM64=" \
              ${MESON_AFTER__ARM} \
              -Dlibunwind=disabled"
+MESON_AFTER__LOONGSON3=" \
+             ${MESON_AFTER__OTHER} \
+             -Dlibunwind=enabled"
+# FIXME: Rust is not available on MIPS R6 yet.
+MESON_AFTER__MIPS64R6EL=" \
+             ${MESON_AFTER__OTHER} \
+             -Dlibunwind=disabled \
+             -Dgallium-rusticl=false"
 MESON_AFTER__PPC64EL=" \
              ${MESON_AFTER__OTHER} \
              -Dlibunwind=enabled"
@@ -87,36 +130,68 @@ MESON_AFTER__RISCV64=" \
              ${MESON_AFTER__OTHER} \
              -Dlibunwind=disabled \
              -Dvalgrind=disabled"
-MESON_AFTER__LOONGSON3=" \
-             ${MESON_AFTER__OTHER} \
-             -Dlibunwind=enabled"
-
 
 MESON_AFTER__RETRO=" \
-             -Ddri-drivers-path=/usr/lib/xorg/modules/dri \
-             -Db_ndebug=true \
              -Dplatforms=x11 \
-             -Dvulkan-overlay-layer=false \
+             -Degl-native-platform=x11 \
+             -Dandroid-stub=false \
              -Ddri3=true \
-             -Degl=true \
+             -Ddri-drivers-path=/usr/lib/xorg/modules/dri \
              -Dgallium-extra-hud=false \
-             -Dgallium-nine=false \
-             -Dgallium-opencl=disabled \
-             -Dgallium-va=true \
              -Dgallium-vdpau=true \
-             -Dgallium-xa=true \
+             -Dgallium-omx=disabled \
+             -Dgallium-va=true \
+             -Dgallium-xa=false \
              -Dgallium-xvmc=true \
-             -Dgbm=true \
+             -Dgallium-nine=false \
+             -Dgallium-d3d10umd=false \
+             -Dgallium-opencl=false \
+             -Dopencl-spirv=false \
+             -Dfreedreno-kgsl=false \
+             -Dfreedreno-virtio=false \
+             -Dimagination-srv=false \
+             -Dshader-cache=true \
+             -Dshader-cache-default=true \
+             -Dvulkan-layers= \
+             -Dshared-glapi=true \
              -Dgles1=true \
              -Dgles2=true \
-             -Dglvnd=true \
+             -Dopengl=true \
+             -Dgbm=true \
              -Dglx=dri \
+             -Degl=true \
+             -Dglvnd=true \
+             -Dmicrosoft-clc=disabled \
+             -Dspirv-to-dxil=false \
+             -Dglx-read-only-text=false \
              -Dllvm=false \
-             -Dlmsensors=false \
-             -Dshared-glapi=true \
+             -Dshared-llvm=false \
+             -Ddraw-use-llvm=true \
              -Dvalgrind=false \
-             -Db_lto=true \
-             -Dlibunwind=disabled"
+             -Dlibunwind=disabled \
+             -Dlmsensors=false \
+             -Dbuild-tests=false \
+             -Denable-glcpp-tests=false \
+             -Dbuild-aco-tests=false \
+             -Dinstall-intel-gpu-tests=false \
+             -Dselinux=false \
+             -Dexecmem=true \
+             -Dosmesa=true \
+             -Dtools= \
+             -Dpower8=false \
+             -Dxlib-lease=true \
+             -Dglx-direct=true \
+             -Dzstd=true \
+             -Dzlib=enabled \
+             -Dsse2=false \
+             -Dperfetto=false \
+             -Ddatasources= \
+             -Dvmware-mks-stats=false \
+             -Dvulkan-beta=false \
+             -Dintel-clc=disabled \
+             -Dvideo-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc \
+             -Dgallium-d3d12-video=disabled \
+             -Dmin-windows-version=10"
 MESON_AFTER__I486=" \
              ${MESON_AFTER__RETRO} \
              -Ddri-drivers=i915,i965,r100,r200,nouveau \
@@ -124,7 +199,6 @@ MESON_AFTER__I486=" \
              -Dvulkan-drivers="
 MESON_AFTER__RETRO_ARM=" \
              ${MESON_AFTER__RETRO} \
-             -Ddri3=true \
              -Ddri-drivers= \
              -Dgallium-drivers=freedreno,tegra,vc4,nouveau,virgl,lima,kmsro,swrast,panfrost \
              -Dvulkan-drivers="
