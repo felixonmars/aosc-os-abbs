@@ -1,9 +1,12 @@
 PKGNAME=spirv-headers
 PKGSEC=libs
 PKGDEP=""
-PKGDES="Machine-readable files for the SPIR-V Registry"
+PKGDES="Headers for the SPIR-V Registry"
 
 ABHOST=noarch
+
+CMAKE_AFTER="-DSPIRV_HEADERS_SKIP_EXAMPLES=OFF \
+             -DSPIRV_HEADERS_SKIP_INSTALL=OFF"
 
 PKGBREAK="spirv-tools<=2019.1+20190122-1"
 PKGREP="spirv-tools<=2019.1+20190122-1"
