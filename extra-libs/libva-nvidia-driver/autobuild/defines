@@ -4,5 +4,7 @@ PKGSEC=libs
 PKGDEP="libva gstreamer"
 BUILDDEP="ffnvcodec"
 
+PKGPROV="nvidia-vaapi-driver"
+
 PKGBREAK="libva-vdpau-driver<=0.7.4-6"
 FAIL_ARCH="!(amd64|arm64)"
