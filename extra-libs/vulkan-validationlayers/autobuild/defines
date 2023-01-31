@@ -5,10 +5,17 @@ BUILDDEP="glslang lxml spirv-headers spirv-tools robin-hood-hashing"
 PKGDES="Vulkan validation layers"
 
 CMAKE_AFTER="-DBUILD_LAYERS=ON \
-             -DBUILD_LAYER_SUPPORT_FILES=OFF \
+             -DBUILD_LAYER_SUPPORT_FILES=ON \
+             -DBUILD_TESTS=OFF \
+             -DBUILD_WERROR=OFF \
+             -DBUILD_WSI_WAYLAND_SUPPORT=ON \
              -DBUILD_WSI_XCB_SUPPORT=ON \
              -DBUILD_WSI_XLIB_SUPPORT=ON \
-             -DBUILD_WSI_WAYLAND_SUPPORT=ON \
+             -DUPDATE_DEPS=OFF \
+             -DUSE_ROBIN_HOOD_HASHING=ON \
+             -DVVL_CPP_STANDARD:STRING=17 \
+             -DVVL_ENABLE_ASAN=OFF \
+             -DVVL_ENABLE_TSAN=OFF \
              -DGLSLANG_INSTALL_DIR=/usr/bin \
              -DSPIRV_HEADERS_INSTALL_DIR=/usr/include \
              -DSPIRV_TOOLS_INSTALL_DIR=/usr"
