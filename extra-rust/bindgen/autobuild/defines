@@ -1,0 +1,9 @@
+PKGNAME=bindgen
+PKGSEC=devel
+PKGDEP="gcc-runtime glibc"
+BUILDDEP="rustc llvm"
+PKGDES="Automatically generates Rust FFI bindings to C (and some C++) libraries"
+
+CARGO_AFTER="-p bindgen-cli"
+
+USECLANG=1
