@@ -1,8 +1,7 @@
-VER=22.3.1
-REL=1
+VER=22.3.5
 SRCS="tbl::https://mesa.freedesktop.org/archive/mesa-$VER.tar.xz \
-      git::commit=tags/v1.608.0;rename=dxheaders::https://github.com/microsoft/DirectX-Headers"
-CHKSUMS="sha256::3c9cd611c0859d307aba0659833386abdca4c86162d3c275ba5be62d16cf31eb \
+      git::commit=tags/v1.608.2;rename=dxheaders::https://github.com/microsoft/DirectX-Headers"
+CHKSUMS="sha256::3eed2ecae2bc674494566faab9fcc9beb21cd804c7ba2b59a1694f3d7236e6a9 \
          SKIP"
 SUBDIR="mesa-$VER"
 CHKUPDATE="anitya::id=1970"
