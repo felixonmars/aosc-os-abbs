@@ -17,6 +17,11 @@ PKGDEP__PPC64="${PKGDEP__RETRO}"
 BUILDDEP="x11-proto mako systemd valgrind llvm libunwind glslang"
 BUILDDEP__RISCV64="x11-proto mako systemd llvm glslang"
 
+USECLANG=0
+# for AMD drivers
+USECLANG__AMD64=1
+USECLANG__ARM64=1
+
 BUILDDEP__RETRO="x11-proto llvm mako"
 BUILDDEP__RETRO__OLDMESA="${BUILDDEP__RETRO} mesa imake"
 BUILDDEP__ARMV4="${BUILDDEP__RETRO}"
