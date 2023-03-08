@@ -1,0 +1,112 @@
+diff -Naur nvidia-525.89.02-orig/common/inc/nv-mm.h nvidia-525.89.02-modded-for-6.3/common/inc/nv-mm.h
+--- nvidia-525.89.02-orig/common/inc/nv-mm.h	2023-03-07 23:42:15.682560771 -0500
++++ nvidia-525.89.02-modded-for-6.3/common/inc/nv-mm.h	2023-03-08 00:04:21.549610806 -0500
+@@ -25,6 +25,11 @@
+ 
+ #include "conftest.h"
+ 
++#include <linux/version.h>
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 3, 0)
++#define AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++#endif
++
+ #if !defined(NV_VM_FAULT_T_IS_PRESENT)
+ typedef int vm_fault_t;
+ #endif
+diff -Naur nvidia-525.89.02-orig/nvidia/nv-mmap.c nvidia-525.89.02-modded-for-6.3/nvidia/nv-mmap.c
+--- nvidia-525.89.02-orig/nvidia/nv-mmap.c	2023-03-07 23:42:15.750560872 -0500
++++ nvidia-525.89.02-modded-for-6.3/nvidia/nv-mmap.c	2023-03-07 23:59:02.590023729 -0500
+@@ -27,6 +27,12 @@
+ #include "nv-linux.h"
+ #include "nv_speculation_barrier.h"
+ 
++#include <linux/version.h>
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 3, 0)
++#define AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++#endif
++
++
+ /*
+  * The 'struct vm_operations' open() callback is called by the Linux
+  * kernel when the parent VMA is split or copied, close() when the
+@@ -452,7 +458,11 @@
+     }
+ 
+     // Needed for the linux kernel for mapping compound pages
++#ifdef AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++    vm_flags_set(vma, VM_MIXEDMAP);
++#else
+     vma->vm_flags |= VM_MIXEDMAP;
++#endif
+ 
+     for (i = 0, addr = mmap_context->page_array[0]; i < pages;
+          addr = mmap_context->page_array[++i], start += PAGE_SIZE)
+@@ -596,7 +606,11 @@
+         }
+         up(&nvl->mmap_lock);
+ 
++#ifdef AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++	vm_flags_set(vma, VM_IO | VM_PFNMAP | VM_DONTEXPAND);
++#else
+         vma->vm_flags |= VM_IO | VM_PFNMAP | VM_DONTEXPAND;
++#endif
+     }
+     else
+     {
+@@ -663,15 +677,23 @@
+ 
+         NV_PRINT_AT(NV_DBG_MEMINFO, at);
+ 
++#ifdef AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++	vm_flags_set(vma, VM_IO | VM_LOCKED | VM_RESERVED | VM_DONTEXPAND | VM_DONTDUMP);
++#else
+         vma->vm_flags |= (VM_IO | VM_LOCKED | VM_RESERVED);
+         vma->vm_flags |= (VM_DONTEXPAND | VM_DONTDUMP);
++#endif
+     }
+ 
+     if ((prot & NV_PROTECT_WRITEABLE) == 0)
+     {
+         vma->vm_page_prot = NV_PGPROT_READ_ONLY(vma->vm_page_prot);
++#ifdef AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++	vm_flags_clear(vma, VM_WRITE | VM_MAYWRITE);
++#else
+         vma->vm_flags &= ~VM_WRITE;
+         vma->vm_flags &= ~VM_MAYWRITE;
++#endif
+     }
+ 
+     vma->vm_ops = &nv_vm_ops;
+diff -Naur nvidia-525.89.02-orig/nvidia-drm/nvidia-drm-gem-user-memory.c nvidia-525.89.02-modded-for-6.3/nvidia-drm/nvidia-drm-gem-user-memory.c
+--- nvidia-525.89.02-orig/nvidia-drm/nvidia-drm-gem-user-memory.c	2023-03-07 23:42:15.755560880 -0500
++++ nvidia-525.89.02-modded-for-6.3/nvidia-drm/nvidia-drm-gem-user-memory.c	2023-03-08 00:09:50.831362008 -0500
+@@ -92,9 +92,14 @@
+         return -EINVAL;
+     }
+ 
++#ifdef AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++    vm_flags_clear(vma, VM_PFNMAP | VM_IO);
++    vm_flags_set(vma, VM_MIXEDMAP);
++#else
+     vma->vm_flags &= ~VM_PFNMAP;
+     vma->vm_flags &= ~VM_IO;
+     vma->vm_flags |= VM_MIXEDMAP;
++#endif
+ 
+     return 0;
+ }
+diff -Naur nvidia-525.89.02-orig/nvidia-uvm/uvm.c nvidia-525.89.02-modded-for-6.3/nvidia-uvm/uvm.c
+--- nvidia-525.89.02-orig/nvidia-uvm/uvm.c	2023-03-07 23:42:15.763560892 -0500
++++ nvidia-525.89.02-modded-for-6.3/nvidia-uvm/uvm.c	2023-03-08 00:05:56.386843122 -0500
+@@ -618,7 +618,11 @@
+     // Using VM_DONTCOPY would be nice, but madvise(MADV_DOFORK) can reset that
+     // so we have to handle vm_open on fork anyway. We could disable MADV_DOFORK
+     // with VM_IO, but that causes other mapping issues.
++#ifdef AOSC_KERNEL_HAS_VM_FLAGS_MODIFIERS
++    vm_flags_set(vma, VM_MIXEDMAP | VM_DONTEXPAND);
++#else
+     vma->vm_flags |= VM_MIXEDMAP | VM_DONTEXPAND;
++#endif
+ 
+     vma->vm_ops = &uvm_vm_ops_managed;
+ 

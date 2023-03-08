@@ -70,7 +70,7 @@ cd NVIDIA-Linux-${NV_ARCH}-${PKGVER}
 abinfo "Patching kernel driver"
 for i in "${SRCDIR}/autobuild/patches/"*.patch; do
 	abinfo "Applying $(basename $i)"
-	patch -Np1 -i "$i"
+	(cd kernel; patch -Np1 -i "$i")
 done
 
 cd kernel
