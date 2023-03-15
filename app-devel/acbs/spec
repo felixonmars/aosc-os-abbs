@@ -1,5 +1,4 @@
-VER=20221105
-REL=1
-SRCS="git::commit=ebb28b6405a797ad812c4369abdefb17bfd7bb3d::https://github.com/AOSC-Dev/acbs"
+VER=20230315
+SRCS="git::commit=974cad87eeb01cbf2ac3811dd26adfe0ab43d7f9::https://github.com/AOSC-Dev/acbs"
 CHKSUMS="SKIP"
 CHKUPDATE="anitya::id=226984"

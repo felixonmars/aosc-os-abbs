@@ -1,7 +1,7 @@
 PKGNAME=acbs
 PKGSEC=devel
 PKGDEP="autobuild3 file libarchive pexpect git mercurial wget pyparsing \
-        pycryptodome ptyprocess"
+        pycryptodome ptyprocess oma"
 BUILDDEP="pybind11 setuptools-python3 pip"
 # Hack for pybind11 cannot set different build settings on retro/non-retro
 BUILDDEP__RETRO="setuptools-python3 pip"
