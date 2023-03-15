@@ -1,5 +1,5 @@
-VER=1.6.78
-SRCS="git::commit=tags/v$VER::https://github.com/AOSC-Dev/autobuild3"
+VER=1.6.78+oma
+SRCS="git::commit=e402417ec6877d53f4441f130b7e7917e75418e9::https://github.com/AOSC-Dev/autobuild3"
 CHKSUMS="SKIP"
 CHKUPDATE="anitya::id=226987"
 SUBDIR=.
