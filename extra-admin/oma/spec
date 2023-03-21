@@ -1,4 +1,4 @@
-VER="0.1.0~alpha.10"
-SRCS="git::commit=ae7fb4c3c1ea19dfc9978236933a354b540e97d7::https://github.com/AOSC-Dev/oma"
+VER="0.13.1"
+SRCS="git::commit=tags/$VER::https://github.com/AOSC-Dev/oma"
 CHKSUMS="SKIP"
 CHKUPDATE="anitya::id=328412"
