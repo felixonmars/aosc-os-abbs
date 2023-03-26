@@ -1,4 +1,4 @@
-From 04dc95be7991c9ca0bbde3f777fa7847bdac421d Mon Sep 17 00:00:00 2001
+From cbf7c2a10a971659f6121676961467e670051c50 Mon Sep 17 00:00:00 2001
 From: Hunter Laux <hunterlaux@gmail.com>
 Date: Wed, 6 Apr 2016 00:54:05 -0700
 Subject: [PATCH] usb: phy: tegra: Add 38.4MHz clock table entry

@@ -1,4 +1,4 @@
-From 026e18ca8359f26d89f7e24a3ab819d509541d15 Mon Sep 17 00:00:00 2001
+From e88fd364e16a41ceb8db06bcf1275c9fb34b60dd Mon Sep 17 00:00:00 2001
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Date: Fri, 28 Oct 2022 21:53:30 +0100
 Subject: [PATCH] HACK: cevt-r4k: Don't call event_handler if it's not
@@ -16,7 +16,7 @@ Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/mips/kernel/cevt-r4k.c b/arch/mips/kernel/cevt-r4k.c
-index 32ec67c9ab67..42b705a9e67d 100644
+index 368e8475870f..055c025f6f47 100644
 --- a/arch/mips/kernel/cevt-r4k.c
 +++ b/arch/mips/kernel/cevt-r4k.c
 @@ -151,7 +151,8 @@ irqreturn_t c0_compare_interrupt(int irq, void *dev_id)

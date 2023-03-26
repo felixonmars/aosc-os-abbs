@@ -1,4 +1,4 @@
-From b3de0f7015109551a45486c66522ce7882a51e7a Mon Sep 17 00:00:00 2001
+From 5e7fe443a987a7f0cc998f7b063a7f02144c1a66 Mon Sep 17 00:00:00 2001
 From: flygoat <flygoatfree@gmail.com>
 Date: Sun, 5 Mar 2017 20:33:17 +0800
 Subject: [PATCH] driver sisfb add resolution 1368*768 for loongson lynloong

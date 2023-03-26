@@ -1,5 +1,5 @@
-VER=6.2.7
-#SRCS="tbl::https://git.kernel.org/torvalds/t/linux-6.2-rc8.tar.gz"
-SRCS="tbl::https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VER%%.0}.tar.xz"
-CHKSUMS="sha256::4303105201fb0c0b17155fff87df0a022a32a41eb1ce94a264ae648c64bd0d8d"
+VER=6.3.0~rc3
+SRCS="tbl::https://git.kernel.org/torvalds/t/linux-6.3-rc3.tar.gz"
+#SRCS="tbl::https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VER%%.0}.tar.xz"
+CHKSUMS="sha256::c60dbfc2561fdfccc05fbf8db3db23e520db677833160bab6abdc78de2f5555b"
 CHKUPDATE="anitya::id=6501"

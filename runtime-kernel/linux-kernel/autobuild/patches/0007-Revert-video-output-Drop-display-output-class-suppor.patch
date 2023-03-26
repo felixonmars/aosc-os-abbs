@@ -1,4 +1,4 @@
-From baf9ac2d7980b1befd218ae33677e70b31b8192d Mon Sep 17 00:00:00 2001
+From eb2b5691aae46c32d0c0b28760a36790552b85b2 Mon Sep 17 00:00:00 2001
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Date: Tue, 7 Nov 2017 09:01:33 +0800
 Subject: [PATCH] Revert "video / output: Drop display output class support"
